@@ -1,0 +1,59 @@
+<h1>List of Merchandise</h1>
+<input type="button" value="Add" class="btn btn-default" (click)="addUser()" />
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>Id</td>
+            <td>Name</td>
+            <td>Cost</td>
+            <td>Description</td>		
+            <td></td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of users">
+            <ng-template [ngTemplateOutlet]="loadTemplate(user)" 
+                        [ngTemplateOutletContext]="{ $implicit: user}">
+            </ng-template>
+        </tr>
+    </tbody>
+</table>
+<div>{{statusMessage}}</div>
+    
+    
+<!--шаблон для чтения-->
+<ng-template #readOnlyTemplate let-user>
+    <td>{{user.id}}</td>
+    <td>{{user.name}}</td>
+    <td>{{user.cost}}</td>
+    <td>{{user.description}}</td>
+    <td>
+        <input type="button" value="Edit" class="btn btn-default" (click)="editUser(user)" />
+    </td>
+    <td>
+        <input type="button" value="Delete" (click)="deleteUser(user)" class="btn btn-default" />
+    </td>
+</ng-template>
+   
+<!--шаблон для редактирования-->
+<ng-template #editTemplate>
+    <td>
+        <input type="text" [(ngModel)]="editedUser.id" class="form-control" />
+    </td>
+    <td>
+        <input type="text" [(ngModel)]="editedUser.name" class="form-control" />
+    </td>
+    <td>
+        <input type="text" [(ngModel)]="editedUser.cost" class="form-control" />
+    </td>
+    <td>
+        <input type="text" [(ngModel)]="editedUser.description" class="form-control" />
+    </td>
+    <td>
+        <input type="button" value="Save" (click)="saveUser()" class="btn btn-success" />
+    </td>
+    <td>
+        <input type="button" value="Cancel" (click)="cancel()" class="btn btn-warning" />
+    </td>
+</ng-template>
